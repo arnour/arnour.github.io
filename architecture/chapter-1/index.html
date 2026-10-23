@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-PT" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo do Capítulo 1 — Fundamentals of Software Architecture</title>
+    <style>
+        :root {
+            --primary: #b91c1c;
+            --primary-dark: #991b1b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --accent-blue: #0284c7;
+            --accent-blue-bg: #e0f2fe;
+            --code-bg: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-back:hover {
+            text-decoration: underline;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        h1 {
+            font-size: 2.1rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            padding: 2.25rem;
+            margin-bottom: 1.75rem;
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .callout {
+            background-color: var(--accent-blue-bg);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+            color: #0369a1;
+        }
+
+        .callout strong {
+            color: #034871;
+        }
+
+        .laws-box {
+            background-color: #fff1f2;
+            border-left: 4px solid var(--primary);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .laws-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .action-container {
+            text-align: center;
+            margin: 2.5rem 0;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.75rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px -1px rgba(185, 28, 28, 0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="../../index.html" class="nav-back">&larr; Voltar à Página Inicial (Beyond the Chapter)</a>
+    
+    <header>
+        <span class="badge">Beyond the Chapter • Leitura Atual</span>
+        <h1>Capítulo 1: Introdução</h1>
+        <p class="subtitle">Resumo estruturado dos conceitos fundamentais de <em>Fundamentals of Software Architecture</em></p>
+    </header>
+
+    <div class="card">
+        <h2>1. Contexto e a Evolving Nature da Arquitetura</h2>
+        <p>
+            O cargo de Arquiteto de Software figura consistentemente entre os melhores empregos do mundo, mas ao contrário de outras profissões (como enfermeiro ou gestor financeiro), não existe um caminho de carreira linear e padronizado. Isto acontece por quatro motivos principais:
+        </p>
+        <ul>
+            <li><strong>Falta de uma definição unificada:</strong> A indústria sempre lutou para definir exatamente o que é arquitetura de software (recorrendo frequentemente à citação de Ralph Johnson: <em>"Architecture is about the important stuff... whatever that is"</em>).</li>
+            <li><strong>Expansão massiva do escopo:</strong> O papel deixou de abranger apenas aspectos puramente técnicos (modulagem e componentes) para incluir operações, DevOps, dados, processos e soft skills.</li>
+            <li><strong>Um alvo em movimento constante:</strong> O ecossistema de software evolui rapidamente. Definições rígidas do passado (como a ideia de que arquitetura são escolhas estruturais custosas de mudar) tornaram-se obsoletas com microsserviços e change-first design.</li>
+            <li><strong>Relevância histórica e contexto:</strong> Muito do material antigo perdeu o sentido porque o contexto mudou. O hardware e as licenças comerciais caras do final do século XX forçavam abordagens defensivas que hoje já não se aplicam (como o caso histórico da Pets.com e a necessidade moderna de escala elástica).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>2. A Definição Moderna de Arquitetura de Software</h2>
+        <p>
+            Os autores definem a arquitetura de software através da combinação de quatro pilares essenciais:
+        </p>
+        <ul>
+            <li><strong>Estrutura (Structure):</strong> O estilo ou estilos arquiteturais utilizados (ex: microsserviços, camadas, microkernel). Descrever o sistema apenas pela estrutura é insuficiente.</li>
+            <li><strong>Características da Arquitetura (Architecture Characteristics / "-ilities"):</strong> Os critérios de sucesso ortogonais à funcionalidade (ex: escalabilidade, disponibilidade, testabilidade, segurança).</li>
+            <li><strong>Decisões de Arquitetura (Architecture Decisions):</strong> As regras e restrições sobre como o sistema deve ser construído (ex: fechar o acesso direto à base de dados para a camada de apresentação). Exceções exigem um processo de <em>Variância (Variance)</em> avaliado pelo ARB.</li>
+            <li><strong>Princípios de Design (Design Principles):</strong> Diretrizes orientadoras (não regras rígidas) para auxiliar as equipas nas escolhas técnicas do dia a dia (ex: dar preferência a mensagens assíncronas).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>3. As Oito Expectativas Centrais de um Arquiteto</h2>
+        <p>Independentemente do título ou cargo, um arquiteto eficaz deve cumprir oito expectativas fundamentais:</p>
+        <ul>
+            <li><strong>Tomar Decisões de Arquitetura:</strong> Orientar (guide) as equipas em vez de especificar cada detalhe tecnológico de forma autocrática.</li>
+            <li><strong>Analisar Continuamente a Arquitetura:</strong> Assegurar a <em>vitalidade da arquitetura</em> e combater a decadência estrutural (*structural decay*).</li>
+            <li><strong>Manter-se Atualizado com as Últimas Tendências:</strong> Monitorizar a evolução tecnológica para antecipar o futuro.</li>
+            <li><strong>Garantir a Conformidade com as Decisões:</strong> Verificar continuamente se as equipas seguem as regras definidas (recorrendo a ferramentas e *fitness functions*).</li>
+            <li><strong>Exposição e Experiência Diversificada:</strong> Privilegiar a <strong>amplitude técnica (*technical breadth*)</strong> em vez de focar numa única ferramenta, aumentando o "aljavaz de opções".</li>
+            <li><strong>Conhecimento do Domínio de Negócio:</strong> Compreender os problemas e a linguagem dos stakeholders e executivos.</li>
+            <li><strong>Competências Interpessoais (Soft Skills):</strong> Liderar equipas, fazer mentoria e resolver problemas humanos ("it's always a people problem").</li>
+            <li><strong>Compreender e Navegar na Política:</strong> Negociar escolhas com gestores, clientes e programadores, sabendo defender as decisões técnicas.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>4. Intersecção com Outras Disciplinas</h2>
+        <p>O papel do arquiteto expandiu-se para colidir diretamente com quatro áreas vitais:</p>
+        <ul>
+            <li><strong>Práticas de Engenharia:</strong> Evolução desde o Extreme Programming (XP) até à Entrega Contínua e DevOps. Destaque para o combate aos <em>unknown unknowns</em> através de processos iterativos e <strong>Fitness Functions</strong> (validações objetivas de integridade arquitetural).</li>
+            <li><strong>Operações / DevOps:</strong> Parceria com operações para delegar preocupações operacionais (como escala elástica) sem inflacionar a complexidade interna do software.</li>
+            <li><strong>Processos:</strong> A arquitetura adapta-se melhor a metodologias Ágeis devido aos ciclos rápidos de feedback e à facilidade de reestruturação iterativa.</li>
+            <li><strong>Dados:</strong> Reconhecimento da relação simbiótica indissociável entre código e armazenamento de dados.</li>
+        </ul>
+    </div>
+
+    <div class="laws-box">
+        <h4>As Duas Leis da Arquitetura de Software</h4>
+        <p><strong>1ª Lei:</strong> Tudo na arquitetura de software é um trade-off. <em>(Corolário: Se acha que descobriu algo que não é um trade-off, provavelmente ainda não identificou o trade-off).</em></p>
+        <p><strong>2ª Lei:</strong> O porquê (Why) é mais importante do que o como (How).</p>
+    </div>
+
+    <div class="action-container">
+        <a href="quiz.html" class="btn">Testar Conhecimentos com o Quiz Interativo &rarr;</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Beyond the Chapter. Leitura e debate técnico para engenheiros EP&amp;D no BR Market.</p>
+    </footer>
+</div>
+
+</body>
+</html>
