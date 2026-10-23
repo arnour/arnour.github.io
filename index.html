@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Fundamentos da Arquitetura de Software - Capítulo 1</title>
+    <style>
+        :root {
+            --primary: #b91c1c; /* O'Reilly inspired crimson */
+            --primary-dark: #991b1b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-bg: #dcfce7;
+            --error: #dc2626;
+            --error-bg: #fee2e2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        h1 {
+            font-size: 1.85rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .progress-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--border);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            text-align: left;
+            padding: 1rem 1.25rem;
+            background-color: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background-color: #fff1f2;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+        }
+
+        .option-letter {
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 0.85rem;
+            min-width: 1.5rem;
+        }
+
+        .option-btn.correct {
+            border-color: var(--success);
+            background-color: var(--success-bg);
+            color: #065f46;
+        }
+
+        .option-btn.correct .option-letter {
+            color: var(--success);
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--error);
+            background-color: var(--error-bg);
+            color: #991b1b;
+        }
+
+        .option-btn.incorrect .option-letter {
+            color: var(--error);
+        }
+
+        .feedback-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            border-left: 4px solid var(--primary);
+            background-color: #f1f5f9;
+        }
+
+        .feedback-title {
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+            display: block;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .results-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 8px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem auto;
+            font-weight: 700;
+        }
+
+        .score-number {
+            font-size: 2.5rem;
+            line-height: 1;
+            color: var(--primary);
+        }
+
+        .score-total {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .review-list {
+            text-align: left;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .review-item {
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+        }
+
+        .review-item h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .review-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 1.25rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <span class="badge">Capítulo 1 • Introdução</span>
+        <h1>Fundamentals of Software Architecture</h1>
+        <p class="subtitle">Mark Richards &amp; Neal Ford — Quiz de Avaliação Interativo</p>
+    </header>
+
+    <div id="quiz-screen" class="card">
+        <div class="progress-container">
+            <div class="progress-header">
+                <span id="question-counter">Pergunta 1 de 12</span>
+                <span id="score-counter">Pontuação: 0</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div id="question-text" class="question-text"></div>
+        <div id="options-container" class="options-list"></div>
+
+        <div id="feedback-box" class="feedback-box">
+            <span id="feedback-title" class="feedback-title"></span>
+            <p id="feedback-text"></p>
+        </div>
+
+        <div class="controls">
+            <button id="next-btn" class="btn" style="display: none;">Próxima Pergunta &rarr;</button>
+        </div>
+    </div>
+
+    <div id="results-screen" class="card results-screen">
+        <h2>Resultado Final do Quiz</h2>
+        <div class="score-circle">
+            <span id="final-score" class="score-number">0</span>
+            <span id="final-total" class="score-total">de 12</span>
+        </div>
+        <p id="final-message" style="font-size: 1.1rem; margin-bottom: 1.5rem;"></p>
+        <button id="restart-btn" class="btn">Recomeçar Quiz</button>
+
+        <div id="review-container" class="review-list"></div>
+    </div>
+</div>
+
+<script>
+const questions = [
+    {
+        q: "De acordo com Mark Richards e Neal Ford no Capítulo 1, quais são as quatro dimensões que combinadas definem a Arquitetura de Software?",
+        options: [
+            "Código-fonte, Base de Dados, Infraestrutura na Cloud e Pipelines de CI/CD.",
+            "Estrutura do sistema, Características da arquitetura ('-ilities'), Decisões de arquitetura e Princípios de design.",
+            "Requisitos funcionais, Diagramas UML, Padrões de Design (GoF) e Metodologias Ágeis.",
+            "Hardware, Sistemas Operativos, Licenciamento de Software e Acordos de Nível de Serviço (SLAs)."
+        ],
+        answer: 1,
+        explanation: "Conforme ilustrado na Figura 1-2 do livro, a arquitetura de software consiste na estrutura do sistema combinada com as características da arquitetura ('-ilities'), decisões de arquitetura e princípios de design."
+    },
+    {
+        q: "Quando um arquiteto responde apenas 'é uma arquitetura de microsserviços' ao descrever o seu sistema, que dimensão da arquitetura está a descrever isoladamente?",
+        options: [
+            "As características da arquitetura ('-ilities').",
+            "Os princípios de design.",
+            "A estrutura do sistema.",
+            "As decisões de arquitetura."
+        ],
+        answer: 2,
+        explanation: "A estrutura refere-se ao tipo de estilo (ou estilos) arquitetural utilizado no sistema, como microsserviços, em camadas (layered) ou microkernel."
+    },
+    {
+        q: "Qual é a principal diferença entre uma 'Decisão de Arquitetura' e um 'Princípio de Design'?",
+        options: [
+            "Uma decisão de arquitetura é uma regra estrita sobre como o sistema deve ser construído, enquanto um princípio de design é uma diretriz (guideline) orientadora.",
+            "Um princípio de design é obrigatório e imutável, enquanto uma decisão de arquitetura é apenas uma sugestão informal.",
+            "As decisões de arquitetura aplicam-se apenas a bases de dados e os princípios de design aplicam-se apenas a interfaces de utilizador.",
+            "Não existe qualquer diferença; os autores utilizam ambos os termos como sinónimos exatos."
+        ],
+        answer: 0,
+        explanation: "As decisões de arquitetura formam as restrições e regras do sistema (o que é ou não permitido), ao passo que um princípio de design funciona como uma diretriz (guideline) para orientar escolhas preferenciais (ex.: dar preferência a mensagens assíncronas)."
+    },
+    {
+        q: "Quando uma decisão arquitetural não pode ser implementada numa parte específica do sistema devido a restrições particulares, que mecanismo formal é utilizado para aprovar uma exceção?",
+        options: [
+            "Um Fitness Function.",
+            "Uma Variância (Variance), analisada por um Architecture Review Board (ARB) ou arquiteto-chefe.",
+            "O Padrão Strangler (Strangler Pattern).",
+            "Um axioma de arquitetura."
+        ],
+        answer: 1,
+        explanation: "Quando uma regra de arquitetura precisa de ser quebrada devido a alguma condição ou restrição específica, abre-se um pedido formal de exceção chamado variância (variance), avaliado pelo ARB ou pelo arquiteto-chefe com base em justificações e trade-offs."
+    },
+    {
+        q: "No que toca à expectativa 'Tomar Decisões de Arquitetura', como deve o arquiteto atuar em relação às escolhas tecnológicas da equipa?",
+        options: [
+            "Especificar sempre a tecnologia exata (ex.: impor React.js), sem dar margem de escolha aos programadores.",
+            "Deixar todas as decisões tecnológicas e arquiteturais exclusivamente ao critério individual de cada programador.",
+            "Orientar (guide) em vez de especificar escolhas tecnológicas (ex.: instruir o uso de uma framework reativa de frontend), exceto quando uma tecnologia específica for indispensável para preservar uma característica arquitetural.",
+            "Escolher apenas tecnologias comerciais proprietárias para garantir suporte técnico."
+        ],
+        answer: 2,
+        explanation: "'Orientar' (Guide) é a palavra-chave: o arquiteto deve usar decisões de arquitetura e princípios de design para orientar as escolhas tecnológicas da equipa, especificando uma tecnologia concreta apenas quando necessário para preservar uma característica arquitetural crítica."
+    },
+    {
+        q: "O que significa o conceito de 'Vitalidade da Arquitetura' (Architecture Vitality) e o que ocorre quando os arquitetos não analisam continuamente a arquitetura?",
+        options: [
+            "Avalia a velocidade de compilação do código; a falta de análise gera erros de sintaxe.",
+            "Avalia quão viável a arquitetura definida há alguns anos continua a ser hoje face às mudanças de negócio e tecnologia; a falta de análise contínua leva à decadência estrutural (structural decay).",
+            "Mede o tempo de atividade (uptime) dos servidores; a falta de análise causa falhas elásticas.",
+            "Refere-se à contratação de novos programadores; a falta de análise gera rotatividade na equipa."
+        ],
+        answer: 1,
+        explanation: "A vitalidade da arquitetura avalia se a arquitetura definida há três ou mais anos continua viável hoje. Quando não é continuamente analisada, sofre de decadência estrutural (structural decay) à medida que alterações no código afetam características como desempenho e escalabilidade."
+    },
+    {
+        q: "Em relação à exposição e experiência tecnológica (Diverse Exposure and Experience), onde deve um arquiteto eficaz concentrar o seu foco?",
+        options: [
+            "Na profundidade técnica (technical depth) extrema numa única linguagem ou plataforma.",
+            "Na amplitude técnica (technical breadth), conhecendo múltiplas tecnologias e os prós e contras de cada uma, em vez de ser especialista apenas numa.",
+            "Exclusivamente em conhecimentos de gestão financeira, abandonando completamente a área técnica.",
+            "Apenas em tecnologias legadas que já provaram o seu valor há mais de 20 anos."
+        ],
+        answer: 1,
+        explanation: "Para um arquiteto, é muito mais valioso focar-se na amplitude técnica (technical breadth) — por exemplo, conhecer 10 produtos de caching diferentes e os respetivos prós e contras — do que ser um especialista profundo em apenas um."
+    },
+    {
+        q: "Porque é que os autores afirmam que um arquiteto precisa de compreender o clima político da empresa e possuir fortes competências de negociação?",
+        options: [
+            "Porque quase todas as decisões que um arquiteto toma serão contestadas (por stakeholders devido a custos/prazos ou por programadores com abordagens diferentes).",
+            "Porque o arquiteto nunca precisa de justificar as suas decisões, bastando impor a sua autoridade hierárquica.",
+            "Para poder substituir os gestores de projeto em reuniões do conselho de administração.",
+            "Porque as decisões de arquitetura têm o mesmo impacto isolado que a escolha de um padrão de código local por um programador."
+        ],
+        answer: 0,
+        explanation: "Ao contrário das escolhas locais de programação, quase todas as decisões de um arquiteto (como isolar bases de dados em silos de aplicação) têm impacto amplo e serão desafiadas por gestores, clientes e programadores, exigindo negociação constante."
+    },
+    {
+        q: "Que lição histórica do caso da empresa Pets.com é destacada no Capítulo 1 para ilustrar a evolução da interseção entre Arquitetura e Operações?",
+        options: [
+            "O excesso de investimento em servidores próprios levou a empresa à falência antes do lançamento.",
+            "O sucesso inesperado de vendas sem escala elástica (elastic scale) na infraestrutura colapsou o site, atrasou entregas e levou ao fecho da empresa.",
+            "A utilização precoce de microsserviços em 1999 gerou custos incomportáveis de licenciamento.",
+            "A falta de uma mascote apelativa no departamento de marketing impediu a angariação de clientes."
+        ],
+        answer: 1,
+        explanation: "A Pets.com teve um marketing brilhante, mas não preparou a sua infraestrutura; quando as encomendas dispararam no Natal, a ausência de escala elástica (capacidade de instanciar mais recursos conforme necessário) levou ao colapso operacional e ao encerramento do negócio."
+    },
+    {
+        q: "Porque é que os esforços de 'Big Design Up Front' (BDUF) sofrem na arquitetura de software, segundo os autores?",
+        options: [
+            "Porque os arquitetos não sabem utilizar ferramentas modernas de diagramação.",
+            "Devido aos 'unknown unknowns' (desconhecidos desconhecidos) — fatores inesperados que surgem durante o projeto e para os quais é impossível desenhar antecipadamente, tornando todas as arquiteturas iterativas.",
+            "Porque as metodologias Ágeis proíbem a criação de qualquer tipo de arquitetura.",
+            "Porque o hardware muda a cada semana, invalidando o código-fonte diariamente."
+        ],
+        answer: 1,
+        explanation: "Os 'unknown unknowns' são o némesis dos sistemas de software. Como ninguém consegue prever problemas inesperados antes de estes surgirem, os esforços de Big Design Up Front falham e 'todas as arquiteturas se tornam iterativas por causa dos unknown unknowns; o Agile apenas reconhece isso e fá-lo mais cedo'."
+    },
+    {
+        q: "O que é uma 'Função de Aptidão Arquitetural' (Architectural Fitness Function), conceito introduzido a partir do livro Building Evolutionary Architectures?",
+        options: [
+            "Um teste físico de resistência aplicado aos servidores de dados.",
+            "Uma avaliação objetiva de integridade de alguma característica (ou características) da arquitetura, usando mecanismos como métricas, testes unitários, monitores e engenharia do caos.",
+            "Uma folha de cálculo usada pelos recursos humanos para avaliar o desempenho anual dos arquitetos.",
+            "Um algoritmo exclusivo para comprimir bases de dados relacionais."
+        ],
+        answer: 1,
+        explanation: "Inspirada na computação evolutiva, uma função de aptidão arquitetural é qualquer mecanismo (testes, métricas, monitores, chaos engineering) que fornece uma avaliação objetiva da integridade de características arquiteturais ao longo do tempo (ex.: um teste em CI que valida o tempo de carregamento de páginas)."
+    },
+    {
+        q: "Quais são a Primeira e a Segunda Lei da Arquitetura de Software enunciadas por Mark Richards e Neal Ford no final do Capítulo 1?",
+        options: [
+            "1ª Lei: 'A arquitetura é sobre as coisas importantes'; 2ª Lei: 'O código nunca mente'.",
+            "1ª Lei: 'Tudo na arquitetura de software é um trade-off'; 2ª Lei: 'O porquê (Why) é mais importante do que o como (How)'.",
+            "1ª Lei: 'Microsserviços são sempre melhores que monólitos'; 2ª Lei: 'Automatize tudo com DevOps'.",
+            "1ª Lei: 'Nunca mude uma decisão de arquitetura'; 2ª Lei: 'A estrutura define o negócio'."
+        ],
+        answer: 1,
+        explanation: "A Primeira Lei afirma que 'Tudo na arquitetura de software é um trade-off' (e o seu corolário diz que se acha que descobriu algo que não é um trade-off, apenas ainda não identificou o trade-off). A Segunda Lei estabelece que 'O porquê é mais importante do que o como'."
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let userAnswers = [];
+
+const questionCounter = document.getElementById('question-counter');
+const scoreCounter = document.getElementById('score-counter');
+const progressFill = document.getElementById('progress-fill');
+const questionText = document.getElementById('question-text');
+const optionsContainer = document.getElementById('options-container');
+const feedbackBox = document.getElementById('feedback-box');
+const feedbackTitle = document.getElementById('feedback-title');
+const feedbackText = document.getElementById('feedback-text');
+const nextBtn = document.getElementById('next-btn');
+const quizScreen = document.getElementById('quiz-screen');
+const resultsScreen = document.getElementById('results-screen');
+const finalScore = document.getElementById('final-score');
+const finalTotal = document.getElementById('final-total');
+const finalMessage = document.getElementById('final-message');
+const restartBtn = document.getElementById('restart-btn');
+const reviewContainer = document.getElementById('review-container');
+
+function loadQuestion() {
+    const q = questions[currentQuestion];
+    questionCounter.textContent = `Pergunta ${currentQuestion + 1} de ${questions.length}`;
+    scoreCounter.textContent = `Pontuação: ${score}`;
+    progressFill.style.width = `${((currentQuestion) / questions.length) * 100}%`;
+
+    questionText.textContent = q.q;
+    optionsContainer.innerHTML = '';
+    feedbackBox.style.display = 'none';
+    nextBtn.style.display = 'none';
+
+    const letters = ['A', 'B', 'C', 'D'];
+    q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span class="option-letter">${letters[idx]}.</span> <span>${opt}</span>`;
+        btn.addEventListener('click', () => selectOption(idx, btn));
+        optionsContainer.appendChild(btn);
+    });
+}
+
+function selectOption(selectedIndex, selectedBtn) {
+    const q = questions[currentQuestion];
+    const buttons = optionsContainer.querySelectorAll('.option-btn');
+    buttons.forEach(btn => btn.disabled = true);
+
+    const isCorrect = selectedIndex === q.answer;
+    if (isCorrect) {
+        selectedBtn.classList.add('correct');
+        score++;
+        scoreCounter.textContent = `Pontuação: ${score}`;
+        feedbackTitle.textContent = '✓ Resposta Correta!';
+        feedbackTitle.style.color = 'var(--success)';
+        feedbackBox.style.borderLeftColor = 'var(--success)';
+    } else {
+        selectedBtn.classList.add('incorrect');
+        buttons[q.answer].classList.add('correct');
+        feedbackTitle.textContent = '✗ Resposta Incorreta';
+        feedbackTitle.style.color = 'var(--error)';
+        feedbackBox.style.borderLeftColor = 'var(--error)';
+    }
+
+    userAnswers.push({
+        question: q.q,
+        selected: q.options[selectedIndex],
+        correct: q.options[q.answer],
+        isCorrect: isCorrect,
+        explanation: q.explanation
+    });
+
+    feedbackText.textContent = q.explanation;
+    feedbackBox.style.display = 'block';
+    nextBtn.textContent = currentQuestion < questions.length - 1 ? 'Próxima Pergunta →' : 'Ver Resultados →';
+    nextBtn.style.display = 'inline-block';
+}
+
+nextBtn.addEventListener('click', () => {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+        loadQuestion();
+    } else {
+        showResults();
+    }
+});
+
+function showResults() {
+    quizScreen.style.display = 'none';
+    resultsScreen.style.display = 'block';
+    finalScore.textContent = score;
+    finalTotal.textContent = `de ${questions.length}`;
+
+    const pct = Math.round((score / questions.length) * 100);
+    if (pct >= 85) {
+        finalMessage.textContent = `Excelente desempenho (${pct}%)! Domina perfeitamente os conceitos fundamentais do Capítulo 1.`;
+    } else if (pct >= 60) {
+        finalMessage.textContent = `Bom trabalho (${pct}%)! Tem uma boa base sobre o Capítulo 1, mas vale a pena rever alguns detalhes.`;
+    } else {
+        finalMessage.textContent = `Concluiu o quiz com ${pct}%. Recomendamos reler o Capítulo 1 e consultar a revisão abaixo.`;
+    }
+
+    reviewContainer.innerHTML = '<h3>Revisão das Respostas</h3>';
+    userAnswers.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'review-item';
+        div.innerHTML = `
+            <h4>${idx + 1}. ${item.question}</h4>
+            <p class="review-meta" style="color: ${item.isCorrect ? 'var(--success)' : 'var(--error)'}; font-weight: 600;">
+                A sua resposta: ${item.selected} ${item.isCorrect ? '✓' : '✗'}
+            </p>
+            ${!item.isCorrect ? `<p class="review-meta" style="color: var(--success); font-weight: 600;">Resposta correta: ${item.correct}</p>` : ''}
+            <p class="review-meta" style="margin-top: 0.4rem;"><em>Explicação:</em> ${item.explanation}</p>
+        `;
+        reviewContainer.appendChild(div);
+    });
+}
+
+restartBtn.addEventListener('click', () => {
+    currentQuestion = 0;
+    score = 0;
+    userAnswers = [];
+    resultsScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    loadQuestion();
+});
+
+loadQuestion();
+</script>
+
+</body>
+</html>
