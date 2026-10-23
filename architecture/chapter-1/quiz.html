@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT" id="html-root">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,15 +20,15 @@
             --bonus-badge: #7c3aed;
         }
 
-        /* Dark Mode variables for Bonus Stage */
+        /* Dark Mode variables applied directly to body */
         body.dark-mode {
             --primary: #f43f5e;
             --primary-dark: #e11d48;
-            --bg: #0f172a;
-            --card-bg: #1e293b;
+            --bg: #000000;
+            --card-bg: #121212;
             --text: #f8fafc;
             --text-muted: #94a3b8;
-            --border: #334155;
+            --border: #27272a;
             --success: #22c55e;
             --success-bg: #064e3b;
             --error: #f87171;
@@ -60,6 +60,40 @@
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
             border-bottom: 2px solid var(--border);
+            position: relative;
+        }
+
+        /* Debug button styled discreetly in the header */
+        .debug-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(124, 58, 237, 0.15);
+            color: #7c3aed;
+            border: 1px dashed #7c3aed;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            visibility: hidden;
+        }
+
+        .debug-btn:hover {
+            background: #7c3aed;
+            color: white;
+        }
+
+        body.dark-mode .debug-btn {
+            background: rgba(124, 58, 237, 0.3);
+            color: #c084fc;
+            border-color: #c084fc;
+        }
+
+        body.dark-mode .debug-btn:hover {
+            background: #c084fc;
+            color: #000000;
         }
 
         .badge {
@@ -169,7 +203,7 @@
         }
 
         body.dark-mode .option-btn:hover:not(:disabled) {
-            background-color: rgba(244, 63, 94, 0.1);
+            background-color: rgba(244, 63, 94, 0.15);
         }
 
         .option-btn:disabled {
@@ -255,7 +289,7 @@
         }
 
         body.dark-mode .btn:disabled {
-            background-color: #475569;
+            background-color: #3f3f46;
         }
 
         .results-screen, .interstitial-screen {
@@ -322,10 +356,11 @@
         }
     </style>
 </head>
-<body>
+<body id="page-body">
 
 <div class="container">
     <header>
+        <button id="debug-force-bonus" class="debug-btn" title="Forçar Modo Bônus para Testes">🐛 Debug: Forçar Bônus</button>
         <span id="header-badge" class="badge">Capítulo 1 • Introdução</span>
         <h1>Fundamentals of Software Architecture</h1>
         <p class="subtitle">Mark Richards &amp; Neal Ford — Quiz de Avaliação Interativo</p>
@@ -363,10 +398,7 @@
         <p style="margin: 1.2rem 0; color: var(--text-muted); line-height: 1.7;">
             Demonstrou domínio absoluto dos conceitos fundamentais do Capítulo 1. Como recompensa, desbloqueou o <strong>Modo Bônus: Arquitetura na Era da Inteligência Artificial</strong>.
         </p>
-        <p style="margin-bottom: 1.5rem; font-size: 0.95rem; font-style: italic;">
-            Nota: Ao entrar no Modo Bônus, o ambiente visual mudará automaticamente para o <strong>Dark Mode</strong> para refletir a imersão avançada em engenharia de IA.
-        </p>
-        <button id="start-bonus-btn" class="btn" style="background-color: var(--bonus-badge);">Iniciar Modo Bônus (4 Perguntas IA) →</button>
+        <button id="start-bonus-btn" class="btn" style="background-color: var(--bonus-badge); margin-top: 1rem;">Iniciar Modo Bônus (4 Perguntas IA) →</button>
     </div>
 
     <!-- Results Screen -->
@@ -571,7 +603,7 @@ let score = 0;
 let userAnswers = [];
 let isBonusStage = false;
 
-const htmlRoot = document.getElementById('html-root');
+const pageBody = document.getElementById('page-body');
 const headerBadge = document.getElementById('header-badge');
 const questionCounter = document.getElementById('question-counter');
 const scoreCounter = document.getElementById('score-counter');
@@ -591,6 +623,7 @@ const finalTotal = document.getElementById('final-total');
 const finalMessage = document.getElementById('final-message');
 const restartBtn = document.getElementById('restart-btn');
 const reviewContainer = document.getElementById('review-container');
+const debugForceBonusBtn = document.getElementById('debug-force-bonus');
 
 function getCurrentQuestions() {
     return isBonusStage ? bonusQuestions : standardQuestions;
@@ -691,10 +724,32 @@ nextBtn.addEventListener('click', () => {
 startBonusBtn.addEventListener('click', () => {
     isBonusStage = true;
     currentQuestion = 0;
-    htmlRoot.classList.add('dark-mode');
+    pageBody.classList.add('dark-mode');
     headerBadge.textContent = 'Modo Bônus • Inteligência Artificial & Arquitetura';
     headerBadge.classList.add('bonus-tag');
     interstitialScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    loadQuestion();
+});
+
+// Debug mechanism to force entering bonus stage directly
+debugForceBonusBtn.addEventListener('click', () => {
+    isBonusStage = true;
+    currentQuestion = 0;
+    score = 12; // Simulate 12 correct answers
+    userAnswers = standardQuestions.map(q => ({
+        question: q.q,
+        selected: q.options[q.answer],
+        correct: q.options[q.answer],
+        isCorrect: true,
+        explanation: q.explanation,
+        isBonus: false
+    }));
+    pageBody.classList.add('dark-mode');
+    headerBadge.textContent = 'Modo Bônus • Inteligência Artificial & Arquitetura';
+    headerBadge.classList.add('bonus-tag');
+    interstitialScreen.style.display = 'none';
+    resultsScreen.style.display = 'none';
     quizScreen.style.display = 'block';
     loadQuestion();
 });
@@ -738,7 +793,7 @@ restartBtn.addEventListener('click', () => {
     score = 0;
     userAnswers = [];
     isBonusStage = false;
-    htmlRoot.classList.remove('dark-mode');
+    pageBody.classList.remove('dark-mode');
     headerBadge.textContent = 'Capítulo 1 • Introdução';
     headerBadge.classList.remove('bonus-tag');
     resultsScreen.style.display = 'none';
