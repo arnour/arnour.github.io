@@ -7,6 +7,7 @@
     <style>
         :root {
             --primary: #b91c1c; /* O'Reilly inspired crimson matching the quiz */
+            --third: #4b4a4a;
             --primary-dark: #991b1b;
             --bg: #f8fafc;
             --card-bg: #ffffff;
@@ -231,7 +232,18 @@
             border: 1px solid var(--border);
         }
 
+        .btn-third {
+            background-color: var(--third);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
         .btn-secondary:hover {
+            background-color: var(--border);
+            color: var(--text);
+        }
+
+        .btn-third:hover {
             background-color: var(--border);
             color: var(--text);
         }
@@ -290,17 +302,21 @@
                 <h4>Fundamentals of Software Architecture</h4>
             </div>
             <div class="book-details">
-                <span class="book-meta">Current Selection • Chapter 1 Spotlight</span>
+                <span class="book-meta">Current Selection • Chapter 2 Spotlight</span>
                 <div class="book-title">Fundamentals of Software Architecture: An Engineering Approach</div>
                 <div class="book-authors">by Mark Richards &amp; Neal Ford</div>
                 <p>
                     We are currently exploring the foundational concepts of software architecture, invalidating historical axioms, analyzing trade-offs, and examining the modern responsibilities and expectations of architects in dynamic engineering ecosystems.
                 </p>
                 <div class="action-buttons">
-                    <a href="architecture/chapter-1/index.html" class="btn">Read Chapter 1 Summary →</a>
-                    <a href="architecture/chapter-1/quiz.html" class="btn btn-secondary">Take Chapter 1 Quiz 🎯</a>
+                    <a href="architecture/chapter-2/index.html" class="btn">Read Chapter 2 Summary →</a>
+                    <a href="architecture/chapter-2/quiz.html" class="btn btn-secondary">Take Chapter 2 Quiz 🎯</a>
                 </div>
-            </div>
+                <div class="action-buttons">
+                    <a href="architecture/chapter-1/index.html" class="btn">Read Chapter 1 Summary →</a>
+                    <a href="architecture/chapter-1/quiz.html" class="btn btn-third">Take Chapter 1 Quiz 🎯</a>
+                </div>
+            </div>         
         </div>
     </div>
 
