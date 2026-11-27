@@ -4,192 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resumo do Capítulo 1 — Fundamentals of Software Architecture</title>
-    <style>
-        :root {
-            --primary: #b91c1c;
-            --primary-dark: #991b1b;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --accent-blue: #0284c7;
-            --accent-blue-bg: #e0f2fe;
-            --code-bg: #f1f5f9;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            padding: 2rem 1rem;
-        }
-
-        .container {
-            max-width: 820px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid var(--border);
-        }
-
-        .nav-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .nav-back:hover {
-            text-decoration: underline;
-        }
-
-        .badge {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.75rem;
-        }
-
-        h1 {
-            font-size: 2.1rem;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.025em;
-        }
-
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            padding: 2.25rem;
-            margin-bottom: 1.75rem;
-            border: 1px solid var(--border);
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            color: var(--text);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        h3 {
-            font-size: 1.15rem;
-            color: var(--primary);
-            margin-top: 1.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        ul {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-        }
-
-        .callout {
-            background-color: var(--accent-blue-bg);
-            border-left: 4px solid var(--accent-blue);
-            padding: 1.25rem;
-            border-radius: 0 8px 8px 0;
-            margin: 1.5rem 0;
-            color: #0369a1;
-        }
-
-        .callout strong {
-            color: #034871;
-        }
-
-        .laws-box {
-            background-color: #fff1f2;
-            border-left: 4px solid var(--primary);
-            padding: 1.25rem;
-            border-radius: 0 8px 8px 0;
-            margin: 1.5rem 0;
-        }
-
-        .laws-box h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .action-container {
-            text-align: center;
-            margin: 2.5rem 0;
-        }
-
-        .btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.85rem 1.75rem;
-            font-size: 1.05rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s, transform 0.1s;
-            box-shadow: 0 4px 6px -1px rgba(185, 28, 28, 0.2);
-        }
-
-        .btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-    </style>
+    <link rel="stylesheet" href="../../assets/css/btc.css">
 </head>
-<body>
+<body class="chapter-page" data-book-slug="fundamentals-software-architecture" data-chapter-id="chapter-1">
 
 <div class="container">
     <a href="../../index.html" class="nav-back">&larr; Voltar à Página Inicial (Beyond the Chapter)</a>
-    
+    <nav id="chapter-nav" class="chapter-nav" aria-label="Navegação entre capítulos"></nav>
+
     <header>
         <span class="badge">Beyond the Chapter • Leitura Atual</span>
         <h1>Capítulo 1: Introdução</h1>
@@ -263,5 +85,6 @@
     </footer>
 </div>
 
+<script src="../../assets/js/chapter-nav.js"></script>
 </body>
 </html>
