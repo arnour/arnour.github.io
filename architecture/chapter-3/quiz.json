@@ -1,0 +1,188 @@
+{
+  "badge": "Capítulo 3 • Modularidade",
+  "page_title": "Quiz: Fundamentos da Arquitetura de Software - Capítulo 3 + Bônus IA",
+  "interstitial_html": "Demonstrou domínio absoluto sobre coesão, acoplamento, métricas estruturais e conascência (Capítulo 3). Como recompensa, desbloqueou o <strong>Modo Bônus: Modularidade e Acoplamento na Era da Inteligência Artificial</strong>.",
+  "bonus_mode_badge": "Modo Bônus • Inteligência Artificial & Arquitetura",
+  "book_heading": "Fundamentals of Software Architecture",
+  "subtitle": "Mark Richards & Neal Ford — Quiz de Avaliação Interativo",
+  "standard": [
+    {
+      "q": "No Capítulo 3, os autores recorrem a uma analogia da física para explicar a importância da modularidade nos sistemas de software. O que afirma essa analogia?",
+      "options": [
+        "Sistemas de software obedecem à conservação de massa e nunca aumentam de tamanho após a primeira versão.",
+        "Sistemas complexos tendem naturalmente para a entropia (desordem), exigindo que os arquitetos despendam energia continuamente para preservar a boa ordem estrutural.",
+        "A velocidade de execução de um módulo é inversamente proporcional à sua massa de código-fonte.",
+        "Módulos fisicamente separados em servidores diferentes eliminam automaticamente qualquer acoplamento lógico."
+      ],
+      "answer": 1,
+      "explanation": "Os autores comparam sistemas de software complexos a sistemas físicos que tendem para a entropia (desordem): a boa estruturação modular não acontece por acaso e exige energia constante do arquiteto para ser mantida."
+    },
+    {
+      "q": "De acordo com a escala de coesão apresentada no Capítulo 3 (da melhor para a pior), qual é o nível de coesão mais desejável e qual é o mais negativo, respetivamente?",
+      "options": [
+        "Coesão Lógica (melhor) e Coesão Funcional (pior).",
+        "Coesão Temporal (melhor) e Coesão Sequencial (pior).",
+        "Coesão Funcional (melhor) e Coesão Coincidental (pior).",
+        "Coesão Comunicacional (melhor) e Coesão Procedural (pior)."
+      ],
+      "answer": 2,
+      "explanation": "A coesão funcional (onde cada parte do módulo está relacionada com as restantes e contém tudo o que é essencial para funcionar) é o ideal, enquanto a coesão coincidental (elementos no mesmo ficheiro sem relação real) representa a pior forma de coesão."
+    },
+    {
+      "q": "Uma classe utilitária como `StringUtils` em Java, que agrupa vários métodos estáticos que operam sobre strings mas não têm relação funcional entre si, é um exemplo clássico de que tipo de coesão?",
+      "options": [
+        "Coesão Lógica (Logical cohesion).",
+        "Coesão Funcional (Functional cohesion).",
+        "Coesão Sequencial (Sequential cohesion).",
+        "Coesão Temporal (Temporal cohesion)."
+      ],
+      "answer": 0,
+      "explanation": "O Capítulo 3 cita explicitamente pacotes como `StringUtils` como exemplo de coesão lógica: os elementos estão agrupados por uma categoria lógica (operações sobre strings), mas executam funções completamente distintas entre si."
+    },
+    {
+      "q": "O que mede exatamente a métrica LCOM (Lack of Cohesion in Methods) da suíte de Chidamber e Kemerer e qual é a sua principal limitação?",
+      "options": [
+        "Mede o tempo de execução de cada método; a limitação é não funcionar em linguagens compiladas.",
+        "Mede a soma dos conjuntos de métodos que não partilham campos (atributos) dentro de uma classe; a limitação é avaliar apenas a estrutura sintática, sem discernir se as peças pertencem juntas logicamente.",
+        "Mede o número de chamadas externas via rede; a limitação é ignorar bases de dados relacionais.",
+        "Mede a cobertura de testes unitários de um pacote; a limitação é exigir 100% de abstração."
+      ],
+      "answer": 1,
+      "explanation": "A métrica LCOM expõe o acoplamento incidental ao identificar métodos numa classe que acedem a campos disjuntos, mas não consegue compreender o significado lógico ou o 'porquê' de negócio por trás do agrupamento."
+    },
+    {
+      "q": "Qual é a diferença entre Acoplamento Aferente ($C^a$) e Acoplamento Eferente ($C^e$) definidos por Yourdon e Constantine?",
+      "options": [
+        "Aferente mede chamadas síncronas e Eferente mede chamadas assíncronas.",
+        "Aferente mede o número de conexões de entrada (incoming) para um artefacto de código, enquanto Eferente mede as conexões de saída (outgoing) para outros artefactos.",
+        "Aferente aplica-se apenas a interfaces e Eferente aplica-se apenas a classes concretas.",
+        "Aferente mede a latência da base de dados e Eferente mede o consumo de memória."
+      ],
+      "answer": 1,
+      "explanation": "Afferent coupling ($C^a$) contabiliza quantos módulos externos dependem do módulo analisado (entradas), ao passo que Efferent coupling ($C^e$) contabiliza de quantos outros módulos ele depende (saídas)."
+    },
+    {
+      "q": "Na métrica de Instabilidade ($I = C^e / (C^e + C^a)$), o que indica um valor próximo de 1 para uma determinada classe ou componente?",
+      "options": [
+        "Que o componente possui muitas dependências de entrada e nenhuma de saída, tornando-o extremamente rígido.",
+        "Que o componente possui elevadas dependências de saída (chama muitos outros módulos) e poucas de entrada, tornando-o altamente volátil e suscetível a quebrar quando outros mudam.",
+        "Que o componente está na Zona de Inutilidade por conter apenas interfaces vazias.",
+        "Que o componente possui coesão funcional perfeita e zero dívida técnica."
+      ],
+      "answer": 1,
+      "explanation": "Quando $C^e$ é alto e $C^a$ é baixo, a instabilidade aproxima-se de 1: o módulo delega trabalho a muitos outros módulos, pelo que qualquer alteração nos métodos chamados pode quebrá-lo facilmente."
+    },
+    {
+      "q": "No gráfico da Distância da Sequência Principal (Main Sequence), o que caracteriza os módulos que caem na 'Zona de Dor' (Zone of Pain) versus os que caem na 'Zona de Inutilidade' (Zone of Uselessness)?",
+      "options": [
+        "Zona de Dor: código demasiado concreto e rígido com pouca abstração (difícil de manter); Zona de Inutilidade: código excessivamente abstrato que se torna difícil de usar.",
+        "Zona de Dor: código com demasiadas interfaces; Zona de Inutilidade: código sem qualquer interface.",
+        "Zona de Dor: sistemas distribuídos em nuvem; Zona de Inutilidade: sistemas monolíticos locais.",
+        "Zona de Dor: métodos com baixa complexidade ciclomática; Zona de Inutilidade: métodos sem testes."
+      ],
+      "answer": 0,
+      "explanation": "No canto inferior esquerdo (baixa abstração e baixa instabilidade) está a Zone of Pain, onde o código muito concreto e muito utilizado é difícil de alterar sem quebrar dependentes; no canto superior direito (alta abstração e alta instabilidade) está a Zone of Uselessness."
+    },
+    {
+      "q": "Como Meilir Page-Jones define o conceito de 'Conascência' (Connascence) no Capítulo 3?",
+      "options": [
+        "A capacidade de um sistema escalar horizontalmente sem alterar a base de dados.",
+        "Dois componentes são conascentes se uma alteração num deles exigir que o outro também seja modificado para manter a correção global do sistema.",
+        "O grau de semelhança entre os nomes de pacotes e os diretórios físicos do sistema operativo.",
+        "A velocidade com que duas threads acedem à mesma variável em memória."
+      ],
+      "answer": 1,
+      "explanation": "A definição formal de conascência estabelece que dois componentes são conascentes quando modificar um deles obriga a modificar o outro para preservar a integridade e correção do sistema."
+    },
+    {
+      "q": "Um programador cria a assinatura `void updateSeat(String name, String seatLocation)` e outro programador invoca-a passando `updateSeat(\"14D\", \"Ford, N\")`. O compilador não acusa erro porque ambos os tipos são `String`, mas o comportamento está errado. Que tipo de conascência estática foi violado?",
+      "options": [
+        "Conascência de Posição (Connascence of Position — CoP).",
+        "Conascência de Identidade (Connascence of Identity — CoI).",
+        "Conascência de Tempo (Connascence of Timing — CoT).",
+        "Conascência de Algoritmo (Connascence of Algorithm — CoA)."
+      ],
+      "answer": 0,
+      "explanation": "A Conascência de Posição (CoP) ocorre quando múltiplos componentes precisam de concordar sobre a ordem exata dos valores nos parâmetros, um problema que nem a tipagem estática consegue prevenir quando os tipos coincidem."
+    },
+    {
+      "q": "Numa classe `Email`, chamar `email.send()` antes de `email.setSubject(\"assunto\")` faz com que o assunto não seja enviado. Que tipo de conascência dinâmica ilustra este cenário?",
+      "options": [
+        "Conascência de Nome (Connascence of Name).",
+        "Conascência de Execução (Connascence of Execution — CoE).",
+        "Conascência de Tipo (Connascence of Type).",
+        "Conascência de Significado (Connascence of Meaning)."
+      ],
+      "answer": 1,
+      "explanation": "A Conascência de Execução (CoE) é uma forma de conascência dinâmica que ocorre em tempo de execução quando a ordem pela qual os métodos ou componentes são executados é crítica para o resultado."
+    },
+    {
+      "q": "Quais são as duas regras práticas enunciadas por Jim Weirich sobre o uso das propriedades da conascência (Força, Localidade e Grau)?",
+      "options": [
+        "Converter conascência estática em dinâmica; aumentar a conascência entre módulos distantes.",
+        "Regra do Grau (converter formas fortes de conascência em formas mais fracas) e Regra da Localidade (à medida que a distância entre elementos aumenta, usar formas mais fracas de conascência).",
+        "Eliminar toda a conascência de nome; maximizar a conascência de identidade entre microsserviços.",
+        "Usar apenas tipagem dinâmica; ignorar a proximidade física dos pacotes."
+      ],
+      "answer": 1,
+      "explanation": "Jim Weirich formulou a Rule of Degree (refatorar formas fortes de conascência para formas mais fracas, como passar de Significado para Nome) e a Rule of Locality (quanto maior a separação entre módulos, mais fraca deve ser a conascência entre eles)."
+    },
+    {
+      "q": "Segundo o Capítulo 3, qual é a principal limitação da conascência clássica dos anos 90 quando aplicada à arquitetura moderna?",
+      "options": [
+        "Ela exige que todo o código seja escrito em C++ ou Smalltalk.",
+        "Ela foca-se em detalhes de higiene de código de baixo nível e não aborda decisões arquiteturais modernas como a comunicação síncrona versus assíncrona em sistemas distribuídos.",
+        "Ela proíbe o uso de métricas de acoplamento aferente e eferente.",
+        "Ela só funciona em aplicações monolíticas sem base de dados."
+      ],
+      "answer": 1,
+      "explanation": "Os autores apontam que a conascência dos anos 90 analisa detalhes granulares ao nível do código, mas não resolve a escolha fundamental das arquiteturas distribuídas modernas entre comunicação síncrona e assíncrona."
+    }
+  ],
+  "bonus": [
+    {
+      "q": "[BÔNUS IA 1] O Capítulo 3 alerta que os sistemas tendem para a entropia e que a 'Coesão Coincidental' ocorre quando elementos sem relação funcional acabam no mesmo ficheiro. Quando equipas usam assistentes de IA para gerar código rapidamente a partir de prompts locais, qual é o principal risco modular e como mitigá-lo?",
+      "options": [
+        "Os modelos de IA recusam-se a gerar classes com mais de 50 linhas de código.",
+        "A IA tende a concentrar lógica heterogénea no ficheiro aberto no momento (gerando baixa coesão e elevado LCOM); o arquiteto deve usar métricas estruturais e fitness functions para impor fronteiras modulares.",
+        "O código gerado por IA possui sempre coesão funcional perfeita, dispensando revisão arquitetural.",
+        "A IA elimina automaticamente todo o acoplamento eferente entre pacotes."
+      ],
+      "answer": 1,
+      "explanation": "Assistentes de IA otimizam a resposta imediata no contexto local do editor, frequentemente inflacionando classes existentes com responsabilidades distintas (degradando a coesão); métricas como LCOM e testes de arquitetura ajudam a conter essa entropia."
+    },
+    {
+      "q": "[BÔNUS IA 2] No Capítulo 3, vemos que a 'Conascência de Significado' (valores mágicos ou convenções implícitas) e a 'Conascência de Algoritmo' representam acoplamentos difíceis de manter. Ao integrar agentes de IA ou pipelines de LLM com serviços determinísticos, como este conceito se manifesta?",
+      "options": [
+        "Se os serviços dependerem de convenções implícitas no texto livre gerado pelo LLM (em vez de contratos estruturados e tipados como JSON Schema), cria-se uma forte conascência de significado/convenção que quebra facilmente quando o modelo ou prompt muda.",
+        "LLMs garantem que nunca haverá alterações no formato de resposta entre diferentes versões do modelo.",
+        "A conascência dinâmica desaparece porque modelos de linguagem são sempre síncronos.",
+        "É preferível usar Conascência de Posição em prompts longos para reduzir custos de tokens."
+      ],
+      "answer": 0,
+      "explanation": "Depender de formatos implícitos ou interpretações textuais de um LLM introduz conascência frágil de significado; aplicar a Regra do Grau significa refatorar essa dependência para contratos explícitos e tipados (Conascência de Tipo/Nome)."
+    },
+    {
+      "q": "[BÔNUS IA 3] Aplicando a 'Regra da Localidade' de Jim Weirich (à medida que a distância entre elementos aumenta, deve-se usar formas mais fracas de conascência) a uma arquitetura distribuída que consome modelos de IA (ex: microsserviços a chamar um serviço central de inferência/RAG), qual é o trade-off arquitetural correto?",
+      "options": [
+        "Partilhar diretamente a base de dados vetorial e as estruturas internas de embeddings entre todos os microsserviços para maximizar a conascência de identidade.",
+        "Isolar o serviço de IA atrás de contratos bem definidos e fracos (Conascência de Nome/Tipo via API), aceitando o trade-off de maior latência de rede e serialização para evitar acoplamento forte entre serviços distantes.",
+        "Incorporar o modelo de linguagem inteiro dentro de cada classe de domínio do frontend.",
+        "Exigir que todos os serviços sincronizem a ordem exata de execução de threads com o servidor de inferência."
+      ],
+      "answer": 1,
+      "explanation": "Em sistemas distribuídos (alta distância entre elementos), expor detalhes internos de embeddings ou prompts gera acoplamento severo; encapsular a IA atrás de APIs com contratos estáveis respeita a Regra da Localidade, trocando simplicidade de chamada direta por desacoplamento e independência evolutiva."
+    },
+    {
+      "q": "[BÔNUS IA 4] A 'Distância da Sequência Principal' alerta contra a 'Zona de Inutilidade' (abstrações excessivas que ninguém usa) e a 'Zona de Dor' (código rígido e concreto). No desenho de plataformas internas de IA para equipas de engenharia, como esse equilíbrio se traduz?",
+      "options": [
+        "Criar cinco camadas de interfaces genéricas antes de ter um único caso de uso de IA em produção, garantindo flexibilidade infinita.",
+        "Chamar diretamente os SDKs proprietários de um único fornecedor de LLM em centenas de classes de negócio sem qualquer abstração, facilitando a migração futura.",
+        "Evitar tanto o over-engineering de abstrações prematuras (Zona de Inutilidade) quanto o acoplamento rígido direto ao fornecedor em todo o código de domínio (Zona de Dor), introduzindo abstrações apenas nos pontos de variação reais.",
+        "Eliminar todas as interfaces do projeto para manter a instabilidade sempre igual a zero."
+      ],
+      "answer": 2,
+      "explanation": "O pensamento arquitetural baseado em trade-offs evita ambos os extremos: nem abstrações especulativas excessivas para modelos futuros que nunca chegam (Zona de Inutilidade), nem espalhar dependências diretas de um fornecedor de IA por toda a base de código (Zona de Dor)."
+    }
+  ]
+}
