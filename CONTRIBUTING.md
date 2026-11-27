@@ -2,6 +2,8 @@
 
 This site uses plain **HTML**, shared **CSS/JS**, and **JSON** data—no build step.
 
+**Harness:** run `node harness/validate.js` before opening a PR. See [`harness/INSTRUCTIONS.md`](harness/INSTRUCTIONS.md) for guardrails and the LLM workflow ([`prompts/generate-chapter-summary-and-quiz.md`](prompts/generate-chapter-summary-and-quiz.md)).
+
 ## Checklist for chapter N
 
 1. **Catalog** — Add a chapter entry to [`assets/data/books.json`](assets/data/books.json) (keep `number` sorted). Update `spotlight_chapter` when it is the current club read.
