@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-PT" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo do Capítulo 3 — Fundamentals of Software Architecture</title>
+    <link rel="stylesheet" href="../../assets/css/btc.css">
+</head>
+<body class="chapter-page" data-book-slug="fundamentals-software-architecture" data-chapter-id="chapter-3">
+
+<div class="container">
+    <a href="../../index.html" class="nav-back">&larr; Voltar à Página Inicial (Beyond the Chapter)</a>
+    <nav id="chapter-nav" class="chapter-nav" aria-label="Navegação entre capítulos"></nav>
+
+    <header>
+        <span class="badge">Beyond the Chapter • Leitura Atual</span>
+        <h1>Capítulo 3: Modularidade</h1>
+        <p class="subtitle">Resumo estruturado dos conceitos fundamentais de <em>Fundamentals of Software Architecture</em></p>
+    </header>
+
+    <div class="card">
+        <h2>1. Definição e Natureza da Modularidade</h2>
+        <p>
+            A <strong>modularidade</strong> descreve um agrupamento lógico de código relacionado (como classes em linguagens orientadas a objetos ou funções em linguagens estruturadas e funcionais), manifestando-se através de mecanismos específicos de cada plataforma, como <em>packages</em> em Java ou <em>namespaces</em> em .NET.
+        </p>
+        <ul>
+            <li><strong>Princípio Organizador contra a Entropia:</strong> Tal como os sistemas físicos tendem para a desordem, os sistemas de software complexos tendem para a entropia se não houver esforço contínuo do arquiteto para preservar a boa estruturação e a separação lógica.</li>
+            <li><strong>Característica Implícita:</strong> Raramente um requisito de negócio pede explicitamente "boa modularidade", mas sem ela a base de código torna-se insustentável e difícil de migrar ou partir no futuro.</li>
+            <li><strong>Separação Lógica vs. Física:</strong> Agrupar código num mesmo monólito pode ser conveniente no curto prazo, mas a falta de fronteiras lógicas bem definidas cria acoplamento oculto que impede uma futura decomposição arquitetural.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>2. Coesão (Cohesion) e a Métrica LCOM</h2>
+        <p>
+            A <strong>coesão</strong> mede até que ponto as partes de um módulo pertencem umas às outras e devem estar empacotadas em conjunto. Dividir um módulo altamente coeso apenas aumenta o acoplamento entre módulos e reduz a legibilidade.
+        </p>
+        <ul>
+            <li><strong>Escala de Coesão (da melhor para a pior):</strong> Funcional (<em>functional</em> — ideal), Sequencial (<em>sequential</em>), Comunicacional (<em>communicational</em>), Procedural (<em>procedural</em>), Temporal (<em>temporal</em>), Lógica (<em>logical</em> — como classes utilitárias <code>StringUtils</code>) e Coincidental (<em>coincidental</em> — a pior, sem relação além do mesmo ficheiro).</li>
+            <li><strong>Lack of Cohesion in Methods (LCOM):</strong> Métrica estrutural (da suíte Chidamber &amp; Kemerer) que avalia a falta de coesão numa classe ou componente ao medir conjuntos de métodos que não partilham campos/atributos entre si.</li>
+            <li><strong>Limitação da Métrica:</strong> Um valor LCOM elevado ajuda a detetar classes utilitárias com acoplamento incidental, mas a métrica apenas avalia a estrutura sintática — não consegue determinar se as peças fazem sentido juntas do ponto de vista lógico ou de negócio (remetendo à 2ª Lei: <em>preferir o "porquê" ao "como"</em>).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>3. Acoplamento (Coupling) e Métricas Estruturais</h2>
+        <p>
+            Baseado na teoria dos grafos, o acoplamento analisa as dependências de chamadas entre artefactos de código:
+        </p>
+        <ul>
+            <li><strong>Acoplamento Aferente (<em>Afferent Coupling</em> — $C^a$):</strong> Mede o número de conexões de entrada (quem depende deste módulo/artefacto).</li>
+            <li><strong>Acoplamento Eferente (<em>Efferent Coupling</em> — $C^e$):</strong> Mede o número de conexões de saída (de quantos outros artefactos este módulo depende).</li>
+            <li><strong>Abstração (<em>Abstractness</em> — $A$):</strong> Rácio entre elementos abstratos (interfaces, classes abstratas) e elementos concretos (implementações).</li>
+            <li><strong>Instabilidade (<em>Instability</em> — $I$):</strong> Rácio $I = C^e / (C^e + C^a)$. Um módulo com elevada instabilidade (muitas saídas, poucas entradas) quebra mais facilmente quando as suas dependências mudam.</li>
+            <li><strong>Distância da Sequência Principal (<em>Distance from the Main Sequence</em> — $D = |A + I - 1|$):</strong> Avalia o equilíbrio saudável entre abstração e instabilidade. Módulos longe desta linha caem na <strong>Zona de Inutilidade</strong> (<em>Zone of Uselessness</em> — demasiado abstrato e difícil de usar) ou na <strong>Zona de Dor</strong> (<em>Zone of Pain</em> — demasiado concreto, rígido e difícil de manter).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>4. Conascência (Connascence)</h2>
+        <p>
+            Introduzida por Meilir Page-Jones, a <strong>conascência</strong> refina o conceito de acoplamento: <em>dois componentes são conascentes se uma alteração num deles exigir que o outro também seja modificado para manter a correção global do sistema</em>.
+        </p>
+        <ul>
+            <li><strong>Conascência Estática (analisável no código-fonte):</strong> Nome (<em>Name</em> — a mais desejável), Tipo (<em>Type</em>), Significado/Convenção (<em>Meaning</em> — como valores <em>hard-coded</em>), Posição (<em>Position</em> — ordem de parâmetros) e Algoritmo (<em>Algorithm</em>).</li>
+            <li><strong>Conascência Dinâmica (em tempo de execução):</strong> Execução (<em>Execution</em> — ordem de chamada de métodos), Tempo (<em>Timing</em> — condições de corrida/<em>race conditions</em>), Valor (<em>Value</em> — transações distribuídas que devem mudar em conjunto) e Identidade (<em>Identity</em> — partilha da mesma estrutura ou fila).</li>
+            <li><strong>Propriedades e Regras de Refatoração:</strong> Avalia-se pela <strong>Força</strong> (facilidade de refatoração), <strong>Localidade</strong> (proximidade no código) e <strong>Grau</strong> (escala do impacto). Segundo Jim Weirich: deve-se converter formas fortes de conascência em formas mais fracas (<em>Rule of Degree</em>) e usar formas mais fracas à medida que a distância entre módulos aumenta (<em>Rule of Locality</em>).</li>
+        </ul>
+    </div>
+
+    <div class="laws-box">
+        <h4>De Módulos para Componentes e Trade-offs</h4>
+        <p><strong>A Decisão Depende do Contexto:</strong> Dividir ou manter operações juntas (como separar <em>Order Maintenance</em> de <em>Customer Maintenance</em>) depende do crescimento esperado e do acoplamento resultante. A conascência clássica dos anos 90 foca-se na higiene de código, mas não resolve a comunicação síncrona vs. assíncrona em sistemas distribuídos — tema que prepara a transição dos módulos lógicos para os <strong>componentes físicos</strong> nos capítulos seguintes.</p>
+    </div>
+
+    <div class="action-container">
+        <a href="quiz.html" class="btn">Testar Conhecimentos com o Quiz do Capítulo 3 &rarr;</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Beyond the Chapter. Leitura e debate técnico para engenheiros EP&amp;D no BR Market.</p>
+    </footer>
+</div>
+
+<script src="../../assets/js/chapter-nav.js"></script>
+</body>
+</html>
