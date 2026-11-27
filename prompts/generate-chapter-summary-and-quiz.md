@@ -140,4 +140,6 @@ Emit a JSON object to merge into `assets/data/books.json` → `chapters[]`:
 - [ ] Portuguese consistent and professional; technical English terms italicized in HTML summary where appropriate (`<em>`).
 
 Produce outputs in order: **Summary HTML** → **quiz.json** → **catalog snippet** → **metadata lines**.
+
+After pasting into the repo, the human author must run **`node harness/validate.js`** (see [`harness/INSTRUCTIONS.md`](../harness/INSTRUCTIONS.md)).
 ````
