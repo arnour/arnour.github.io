@@ -1,1 +1,25 @@
-theme: jekyll-theme-slate
+title: Beyond the Chapter
+description: >-
+  A remote-first book club for EP&D professionals in the BR Market —
+  chapter summaries, quizzes, and technical debate.
+lang: en
+url: "https://arnour.github.io"
+baseurl: ""
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+defaults:
+  - scope:
+      path: "architecture"
+    values:
+      book_slug: fundamentals-software-architecture
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - CONTRIBUTING.md
+  - vendor

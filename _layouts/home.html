@@ -1,0 +1,70 @@
+---
+layout: default
+body_class: home-layout
+lang: en
+---
+<div class="container">
+    <header>
+        <span class="badge">Remote-First Book Club • BR Market</span>
+        <h1>Beyond the Chapter</h1>
+        <p class="tagline">A remote-first book club for EP&amp;D (Engineering, Product &amp; Design) professionals in the BR Market.</p>
+    </header>
+
+    <div class="card">
+        <h2>About the Club</h2>
+        <p>
+            Welcome to <strong>Beyond the Chapter</strong>! We are a community of EP&amp;D (Engineering, Product, and Design) engineers and practitioners across the Brazilian market who believe that professional growth goes beyond surface-level tutorials.
+        </p>
+        <p>
+            We don't just read books—we actively break them down, challenge assumptions, and connect theoretical concepts directly to real-world engineering challenges, product scaling bottlenecks, and operational complexities.
+        </p>
+
+        <div class="mission-grid">
+            <div class="mission-item">
+                <h3>Read &amp; Analyze</h3>
+                <p>Deep-dive into foundational and modern engineering literature together.</p>
+            </div>
+            <div class="mission-item">
+                <h3>Challenge Ideas</h3>
+                <p>Question outdated axioms and test theories against modern production environments.</p>
+            </div>
+            <div class="mission-item">
+                <h3>Apply to Reality</h3>
+                <p>Translate book insights into actionable solutions for our daily EP&amp;D workflows.</p>
+            </div>
+        </div>
+    </div>
+
+    {% for book in site.data.books %}
+    <div class="card">
+        <h2>Currently Reading</h2>
+        <div class="book-layout">
+            <div class="book-cover-placeholder">
+                <span>{{ book.publisher_label }}</span>
+                <h4>{{ book.title_short }}</h4>
+            </div>
+            <div class="book-details">
+                <span class="book-meta">Current Selection • Chapter {{ book.spotlight_chapter }} Spotlight</span>
+                <div class="book-title">{{ book.title }}</div>
+                <div class="book-authors">by {{ book.authors }}</div>
+                <p>{{ book.description }}</p>
+                {% assign chapters_sorted = book.chapters | sort: 'number' | reverse %}
+                {% for chapter in chapters_sorted %}
+                {% assign is_spotlight = false %}
+                {% if chapter.number == book.spotlight_chapter %}
+                    {% assign is_spotlight = true %}
+                {% endif %}
+                {% capture summary_path %}/{{ book.base_path }}/{{ chapter.id }}/{% endcapture %}
+                {% capture quiz_path %}/{{ book.base_path }}/{{ chapter.id }}/quiz.html{% endcapture %}
+                <div class="action-buttons">
+                    <a href="{{ summary_path | relative_url }}" class="btn">Read Chapter {{ chapter.number }} Summary →</a>
+                    <a href="{{ quiz_path | relative_url }}" class="btn {% if is_spotlight %}btn-secondary{% else %}btn-third{% endif %}">Take Chapter {{ chapter.number }} Quiz 🎯</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% include footer.html %}
+</div>

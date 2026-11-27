@@ -1,0 +1,8 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+{% if page.description %}<meta name="description" content="{{ page.description }}">{% elsif site.description %}<meta name="description" content="{{ site.description }}">{% endif %}
+<link rel="stylesheet" href="{{ '/assets/css/btc.css' | relative_url }}">
+{% if page.layout == 'quiz' %}
+<link rel="stylesheet" href="{{ '/assets/css/quiz.css' | relative_url }}">
+{% endif %}

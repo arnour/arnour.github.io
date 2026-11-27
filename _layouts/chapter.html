@@ -1,0 +1,28 @@
+---
+layout: default
+body_class: chapter-page
+---
+{% assign book = site.data.books | where: 'slug', page.book_slug | first %}
+{% assign chapter = book.chapters | where: 'id', page.chapter_id | first %}
+<div class="container">
+    <a href="{{ '/' | relative_url }}" class="nav-back">&larr; Voltar à Página Inicial (Beyond the Chapter)</a>
+
+    <header>
+        <span class="badge">Beyond the Chapter • Leitura Atual</span>
+        <h1>{{ chapter.headline }}</h1>
+        <p class="subtitle">Resumo estruturado dos conceitos fundamentais de <em>{{ book.title_short }}</em></p>
+    </header>
+
+    {% include chapter-nav.html %}
+
+    <div class="chapter-content">
+        {{ content }}
+    </div>
+
+    <div class="action-container">
+        {% capture quiz_path %}/{{ book.base_path }}/{{ chapter.id }}/quiz.html{% endcapture %}
+        <a href="{{ quiz_path | relative_url }}" class="btn">{{ chapter.quiz_cta }}</a>
+    </div>
+
+    {% include footer.html variant='chapter' %}
+</div>

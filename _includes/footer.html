@@ -1,0 +1,9 @@
+<footer>
+    <p>
+        {% if include.variant == 'chapter' %}
+        &copy; {{ 'now' | date: '%Y' }} Beyond the Chapter. Leitura e debate técnico para engenheiros EP&amp;D no BR Market.
+        {% else %}
+        &copy; {{ 'now' | date: '%Y' }} Beyond the Chapter. Empowering EP&amp;D Engineers in the BR Market.
+        {% endif %}
+    </p>
+</footer>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'pt-PT' }}" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/btc.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/quiz.css' | relative_url }}">
+</head>
+{% assign quiz = site.data.quizzes[page.quiz_data] %}
+<body id="page-body" class="quiz-page{% unless jekyll.environment == 'production' %} quiz-debug{% endunless %}">
+<div class="container">
+    <header>
+        {% unless jekyll.environment == 'production' %}
+        <button type="button" id="debug-force-bonus" class="debug-btn" title="Forçar Modo Bônus para Testes">🐛 Debug: Forçar Bônus</button>
+        {% endunless %}
+        <span id="header-badge" class="badge">{{ quiz.badge }}</span>
+        <h1>{{ quiz.book_heading }}</h1>
+        <p class="subtitle">{{ quiz.subtitle }}</p>
+    </header>
+
+    <div id="quiz-screen" class="card">
+        <div class="progress-container">
+            <div class="progress-header">
+                <span id="question-counter">Pergunta 1 de 12</span>
+                <span id="score-counter">Pontuação: 0</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div id="question-text" class="question-text"></div>
+        <div id="options-container" class="options-list"></div>
+
+        <div id="feedback-box" class="feedback-box">
+            <span id="feedback-title" class="feedback-title"></span>
+            <p id="feedback-text"></p>
+        </div>
+
+        <div class="controls">
+            <button type="button" id="next-btn" class="btn" style="display: none;">Próxima Pergunta &rarr;</button>
+        </div>
+    </div>
+
+    <div id="interstitial-screen" class="card interstitial-screen">
+        <span class="badge bonus-tag" style="font-size: 0.9rem; padding: 0.5rem 1rem; margin-bottom: 1rem;">Conquista Desbloqueada!</span>
+        <h2>Parabéns! Gabaritou as 12 Questões!</h2>
+        <p style="margin: 1.2rem 0; color: var(--text-muted); line-height: 1.7;">
+            {{ quiz.interstitial.body | markdownify }}
+        </p>
+        <button type="button" id="start-bonus-btn" class="btn btn-bonus">Iniciar Modo Bônus (4 Perguntas IA) →</button>
+    </div>
+
+    <div id="results-screen" class="card results-screen">
+        <h2>Resultado Final do Quiz</h2>
+        <div class="score-circle">
+            <span id="final-score" class="score-number">0</span>
+            <span id="final-total" class="score-total">de 12</span>
+        </div>
+        <p id="final-message" style="font-size: 1.1rem; margin-bottom: 1.5rem;"></p>
+        <button type="button" id="restart-btn" class="btn">Recomeçar Quiz</button>
+
+        <div id="review-container" class="review-list"></div>
+    </div>
+</div>
+
+<script>
+window.__QUIZ__ = {{ quiz | jsonify }};
+</script>
+<script src="{{ '/assets/js/quiz-engine.js' | relative_url }}"></script>
+</body>
+</html>

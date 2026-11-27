@@ -1,0 +1,28 @@
+{% assign book = site.data.books | where: 'slug', page.book_slug | first %}
+{% if book %}
+{% assign chapters = book.chapters | sort: 'number' %}
+{% assign current = chapters | where: 'id', page.chapter_id | first %}
+{% assign prev_num = current.number | minus: 1 %}
+{% assign next_num = current.number | plus: 1 %}
+{% assign prev_ch = chapters | where: 'number', prev_num | first %}
+{% assign next_ch = chapters | where: 'number', next_num | first %}
+<nav class="chapter-nav" aria-label="Navegação entre capítulos">
+    <span>
+        {% if prev_ch %}
+        {% capture prev_path %}/{{ book.base_path }}/{{ prev_ch.id }}/{% endcapture %}
+        <a href="{{ prev_path | relative_url }}">&larr; Capítulo {{ prev_ch.number }}</a>
+        {% else %}
+        <span class="disabled">&larr; Capítulo anterior</span>
+        {% endif %}
+    </span>
+    <a href="{{ '/' | relative_url }}">Beyond the Chapter</a>
+    <span>
+        {% if next_ch %}
+        {% capture next_path %}/{{ book.base_path }}/{{ next_ch.id }}/{% endcapture %}
+        <a href="{{ next_path | relative_url }}">Capítulo {{ next_ch.number }} &rarr;</a>
+        {% else %}
+        <span class="disabled">Próximo capítulo &rarr;</span>
+        {% endif %}
+    </span>
+</nav>
+{% endif %}
