@@ -1,0 +1,28 @@
+{
+  "books": [
+    {
+      "slug": "fundamentals-software-architecture",
+      "title_short": "Fundamentals of Software Architecture",
+      "title": "Fundamentals of Software Architecture: An Engineering Approach",
+      "authors": "Mark Richards & Neal Ford",
+      "publisher_label": "O'Reilly",
+      "spotlight_chapter": 2,
+      "base_path": "architecture",
+      "description": "We are currently exploring the foundational concepts of software architecture, invalidating historical axioms, analyzing trade-offs, and examining the modern responsibilities and expectations of architects in dynamic engineering ecosystems.",
+      "chapters": [
+        {
+          "id": "chapter-1",
+          "number": 1,
+          "headline": "Capítulo 1: Introdução",
+          "quiz_cta": "Testar Conhecimentos com o Quiz Interativo →"
+        },
+        {
+          "id": "chapter-2",
+          "number": 2,
+          "headline": "Capítulo 2: Pensamento Arquitetural (Architectural Thinking)",
+          "quiz_cta": "Testar Conhecimentos com o Quiz do Capítulo 2 →"
+        }
+      ]
+    }
+  ]
+}
